@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WEB SCRAPING</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script defer src="js/juegos.controller.js"></script>
+    <script defer src="js/main.js"></script>
 </head>
 <body>
     
-    <h1>HISTORIAL PRECIO MAS BAJO</h1>
+    <h1>HISTORIAL PRECIOS</h1>
 
     <select id="juegos">
-        <% for (let i = 0; i < juegos.length; i++) { %>
-            <option value="<%- juegos[i].titulo %>"><%- juegos[i].titulo %></option>
+        <% for (let i = 0; i < games.length; i++) { %>
+            <option value="<%- games[i].titulo %>"><%- games[i].titulo %></option>
         <% } %>
     </select>
 
