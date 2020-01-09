@@ -1,15 +1,18 @@
-const cheerio = require('cheerio');
-const request = require('request-promise');
+const express = require('express');
+const app = express();
+const path = require('path');
+const mongoose = require('mongoose');
 
-const init = async () => {
+app.set('views', path.join(__dirname, 'src/views'));
+app.set('view engine', 'ejs')
 
-    const $ = await request({
-        uri: 'https://www.allkeyshop.com/blog/',
-        transform: body => cheerio.load(body)
-    });
-    
-    const webTitle = $('title');
-    console.log(webTitle.html());
-}
+app.use(express.static(path.join(__dirname, 'src/public')))
 
-init();
+require('./app/routes/routes.js')(app)
+
+mongoose.connect('mongodb://localhost:27017/juegos', { useNewUrlParser: true })
+    .then(() => console.log('mongodb stated...'))
+    .catch(err => console.log(err))
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`listening in PORT ${port}...`));
