@@ -1,3 +1,5 @@
+const dateFormat = require('dateformat');
+
 module.exports = (app) => {
 
     const scrap = require('../../src/controllers/scrap');
@@ -5,14 +7,20 @@ module.exports = (app) => {
 
     app.get('/', async (req, res) => {
         let games = await scrap.getGames();
-        juegos.almacenarJuegos(games);
         res.render('juegos', { games });
     })
 
+    let timming = 5 * 60000;
+    let service = setInterval(async () => {
+        let games = await scrap.getGames();
+        await juegos.almacenarJuegos(games);
+        console.log('scraping -> ' + dateFormat(new Date(), "dd-mm-yyyy hh:MM:ss"));
+    }, timming);
+
     app.get('/juegos', juegos.getGamePrices);
 
-    app.get('/deleteAll', (req, res) => {
-        juegos.deleteAllGames(req, res);
+    app.get('/deleteAll', async (req, res) => {
+        await juegos.deleteAllGames(req, res);
         res.redirect('/juegos');
     });
 
