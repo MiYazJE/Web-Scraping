@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'src/public')))
 
 require('./app/routes/routes.js')(app)
 
-mongoose.connect('mongodb://localhost:27017/juegos', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://scraper:scrapermaster@cluster0-rpm36.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true })
     .then(() => console.log('mongodb stated...'))
     .catch(err => console.log(err))
 
