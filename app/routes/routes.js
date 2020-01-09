@@ -10,11 +10,11 @@ module.exports = (app) => {
         res.render('juegos', { games });
     })
 
-    let timming = 5 * 60000;
+    let timming = 60000;
     let service = setInterval(async () => {
         let games = await scrap.getGames();
         await juegos.almacenarJuegos(games);
-        console.log('scraping -> ' + dateFormat(new Date(), "dd-mm-yyyy hh:MM:ss"));
+        console.log('scraping -> ' + dateFormat());
     }, timming);
 
     app.get('/juegos', juegos.getGamePrices);

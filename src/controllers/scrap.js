@@ -4,7 +4,7 @@ const dateFormat = require('dateFormat');
 
 exports.getGames = async () => {
 
-    let day = dateFormat(new Date(), "dd-mm-yyyy hh:MM:ss");
+    let day = dateFormat();
 
     const juegos = [];
 
