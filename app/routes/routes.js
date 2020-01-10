@@ -6,13 +6,13 @@ const juegos = require('../controllers/juegos.controllers');
 module.exports = (app) => {
 
     app.get('/', async (req, res) => {
-        let games = await getGames();
+        let games = await juegos.getGameNames();
         res.render('juegos', { games });
     })
 
-    let timming = 60000 * 5;
+    let timming = 6000 * 10;
     let service = setInterval(async () => {
-        let games = await this.getGames();
+        let games = await scrapGames();
         await juegos.almacenarJuegos(games);
         console.log('scraping -> ' + dateFormat());
     }, timming);
@@ -29,7 +29,7 @@ module.exports = (app) => {
     
 } 
 
-getGames = async () => {
+scrapGames = async () => {
 
     let day = dateFormat();
 
