@@ -10,7 +10,7 @@ module.exports = (app) => {
         res.render('juegos', { games });
     })
 
-    let timming = 6000 * 10;
+    let timming = 60000 * 10;
     let service = setInterval(async () => {
         let games = await scrapGames();
         await juegos.almacenarJuegos(games);
