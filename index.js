@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'src/public')))
 require('./app/routes/routes.js')(app)
 
 mongoose.connect('mongodb+srv://scraper:scrapermaster@cluster0-rpm36.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true })
-    .then(() => console.log('mongodb stated...'))
+    .then(() => console.log('mongodb started...'))
     .catch(err => console.log(err))
 
 const port = process.env.PORT || 5000;

@@ -47,7 +47,6 @@ const init = () => {
         }
     }
 
-    myChart = new Chart(ctx, details);
     actualizarGrafica();
 }
 
