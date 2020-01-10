@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const juegoSchema = mongoose.Schema({
     titulo: String,
-    precio: String,
-    fecha: String
+    precios: [String],
+    fechas: [String]
 }, {
     timestamps: true
 })

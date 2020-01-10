@@ -5,14 +5,14 @@ let ctx, canvas, myChart, details;
 const actualizarGrafica = async () => {
 
     let titulo = juegos.options[juegos.selectedIndex].value;
-    
+
     let response = await fetch(`/${titulo}`);
     let data     = await response.json();
 
-    let prices = data.map(juego => Number(juego.precio.slice(0, -1)));
-    let dates  = data.map(juego => juego.fecha);
+    let prices = data.precios.map(precio => Number(precio.slice(0, -1)));
+    let dates  = data.fechas.map(date => date);
 
-    details.data.datasets[0].label = data[0].titulo;
+    details.data.datasets[0].label = data.titulo;
     details.data.labels = dates;
     details.data.datasets[0].data = prices;
 

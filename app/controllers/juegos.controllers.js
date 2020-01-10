@@ -1,24 +1,57 @@
 
 const Juego = require('../model/juegos.model');
 
-exports.almacenarJuegos = (juegos) => {
+exports.almacenarJuegos = async (juegos) => {
 
-    juegos.forEach(juego => {
-        Juego.create(juego, (err, juego) => {
+    juegos.forEach(async (juego) => {
+
+        let juegoExiste = await Juego.findOne({titulo: juego.titulo}, (err, juego) => {
             if (err) throw err;
+            return juego;
         })
+
+        if (!juegoExiste) {
+            await Juego.create(juego, (err, juego) => {
+                if (err) throw err;
+                console.log('creando el titulo -> ' + juego.titulo);
+            })
+        }
+        else {
+            let newPrices = [...juego.precios, ...juegoExiste.precios];
+            let newDates  = [...juego.fechas, ...juegoExiste.fechas];
+            await Juego.update({
+                titulo: juego.titulo
+            }, {
+                precios: newPrices, 
+                fechas: newDates
+            }, 
+            (err, status) => {
+                if (err) throw err;
+                console.log('actualizando un el titulo -> ' + juego.titulo);
+            })
+        }
+
     });
 
 }
 
-exports.getGamePrices = (req, res) => Juego.find({}, (err, users) => res.send(users));
+exports.getAllGames = async (req, res) => res.send(await getEverything()); 
+
+const getEverything = () => Juego.find({}, (err, users) => users);
 
 exports.deleteAllGames = (req, res) => {
     Juego.deleteMany({}, (err, status) => console.log(status));
 }
 
 exports.getPrices = (req, res) => {
-    Juego.find(req.params, (err, prices) => {
+    Juego.findOne(req.params, (err, prices) => {
         res.status(200).send(prices);
     })
+}
+
+exports.getGameNames = async () => {
+    let names = new Set();
+    let all = await getEverything();
+    names = all.map(game => game.titulo);
+    return names;
 }
